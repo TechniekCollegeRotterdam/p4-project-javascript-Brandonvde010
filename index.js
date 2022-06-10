@@ -7,61 +7,27 @@ canvas.height = 576
 c.fillRect(0, 0, canvas.width, canvas.height)
 
 const gravity = 0.7
-class sprite {
-    constructor({position, velocity, color = 'red', offset}) {
-        this.position = position
-        this.velocity = velocity
-        this.width = 50
-        this.height = 150
-        this.lastKey
-        this.attackBox = {
-            position: {
-                x:this.position.x,
-                y: this.position.y
-            } ,
-            offset,
-            width: 100,
-            height: 50 , 
-        }
-     this.color = color
-     this.isAttacking
-    }
 
-    draw () {
-        c.fillStyle = this.color
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+const background = new sprite ({
+    position: {
+        x: 0,
+        y: 0
+    },
+    imageSrc: './img/background.png'
+})
 
-        // attack box
-        if (this.isAttacking) {
-        c.fillStyle = 'green'
-        c.fillRect(this.attackBox.position.x,this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
-    }
-    }
-
-    update() {
-        this.draw()
-        this.attackBox.position.x =this.position.x + this.attackBox.offset.x
-        this.attackBox.position.y =this.position.y
-        
-        this.position.x += this.velocity.x
-        this.position.y += this.velocity.y
-
-        if (this.position.y + this.height + this.velocity.y >= canvas.height) {
-            this.velocity.y = 0 
-        } else this.velocity.y += gravity
-   }
-
-   attack () {
-       this.isAttacking = true
-       setTimeout(() => {
-         this.isAttacking = false  
-       }, 100);
-    }
-}
+const shop = new sprite ({
+    position: {
+        x: 641,
+        y: 129
+    },
+    imageSrc: './img/shop.png',
+    scale: 2.75,
+    framesMax: 6
+})
 
 
-
-const player = new sprite ({
+const player = new Fighter ({
     position:  {
     x: 0, 
     y: 0
@@ -73,10 +39,12 @@ velocity: {
 offset: {
     x:0,
     y:0
-}
+},
+imageSrc: './img/samuraiMack/Idle.png',
+framesMax: 8
 })
 
-const enemy = new sprite ({
+const enemy = new Fighter ({
     position:  {
     x: 400, 
     y: 100
@@ -114,17 +82,12 @@ pressed: false
 }
 }
 
-function rectangularCollision ({rectangle1, rectangle2}) {
-    return (rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x 
-        && rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width && rectangle1.attackBox.position.y 
-        + rectangle1.attackBox.height >= rectangle2.position.y && rectangle1.attackBox.position.y <= rectangle2.position.y
-        + rectangle2.height)
-}
-
 function animate() {
-    window.requestAnimationFrame(animate);;;;;;
+    window.requestAnimationFrame(animate)
     c.fillStyle = 'black'
     c.fillRect(0, 0, canvas.width, canvas.height)
+    background.update()
+    shop.update()
     player.update()
     enemy.update()
      
@@ -151,7 +114,8 @@ function animate() {
         rectangle2: enemy
     }) && player.isAttacking) {
             player.isAttacking = false
-        console.log('Balls');
+            enemy.health -= 20
+        document.querySelector('#enemyHealth') .style.width = enemy.health + '%'
     }
 
     if ( rectangularCollision({
@@ -159,9 +123,12 @@ function animate() {
         rectangle2: player
     }) && enemy.isAttacking) {
             enemy.isAttacking = false
-        console.log('penis');
+            player.health -= 20
+            document.querySelector('#playerHealth') .style.width = player.health + '%'
     }
 }
+
+decreaseTimer()
 
 animate()
 
