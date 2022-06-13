@@ -13,17 +13,7 @@ const background = new Sprite({
     x: 0,
     y: 0
   },
-  imageSrc: './img/background.png'
-})
-
-const shop = new Sprite({
-  position: {
-    x: 600,
-    y: 128
-  },
-  imageSrc: './img/shop.png',
-  scale: 2.75,
-  framesMax: 6
+  imageSrc: './img/achtergrond2.png'
 })
 
 const player = new Fighter({
@@ -171,7 +161,6 @@ function animate() {
   c.fillStyle = 'black'
   c.fillRect(0, 0, canvas.width, canvas.height)
   background.update()
-  shop.update()
   c.fillStyle = 'rgba(255, 255, 255, 0.15)'
   c.fillRect(0, 0, canvas.width, canvas.height)
   player.update()
@@ -329,4 +318,4 @@ window.addEventListener('keyup', (event) => {
       keys.ArrowLeft.pressed = false
       break
   }
-})3
+})
