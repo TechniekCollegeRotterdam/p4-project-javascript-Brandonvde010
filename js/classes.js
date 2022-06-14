@@ -1,3 +1,4 @@
+/* Creating a class called Sprite. */
 class Sprite {
     constructor({
       position,
@@ -19,6 +20,27 @@ class Sprite {
       this.offset = offset
     }
   
+   /**
+    * "Draw the image at the current frame, at the position of the object, and scale it to the size of
+    * the object."
+    * 
+    * The first line of the function is the drawImage() function. It takes in the image, the x and y
+    * coordinates of the image, and the width and height of the image.
+    * 
+    * The first parameter is the image. This is the image that we want to draw.
+    * 
+    * The second parameter is the x coordinate of the image. This is the x coordinate of the image on
+    * the canvas.
+    * 
+    * The third parameter is the y coordinate of the image. This is the y coordinate of the image on
+    * the canvas.
+    * 
+    * The fourth parameter is the width of the image. This is the width of the image on the canvas.
+    * 
+    * The fifth parameter is the height of the image. This is the height of the image on the canvas.
+    * 
+    * The
+    */
     draw() {
       c.drawImage(
         this.image,
@@ -33,6 +55,13 @@ class Sprite {
       )
     }
   
+    /**
+     * "If the number of frames elapsed is divisible by the number of frames to hold, then increment
+     * the current frame by one, unless the current frame is the last frame, in which case set the
+     * current frame to the first frame."
+     * 
+     * The above function is called in the update function, which is called every frame.
+     */
     animateFrames() {
       this.framesElapsed++
   
@@ -45,12 +74,14 @@ class Sprite {
       }
     }
   
+    /* Drawing the image and animating the frames. */
     update() {
       this.draw()
       this.animateFrames()
     }
   }
   
+  /* It creates a fighter object. */
   class Fighter extends Sprite {
     constructor({
       position,
@@ -99,11 +130,13 @@ class Sprite {
       }
     }
   
+    /* Drawing the image and animating the frames. */
     update() {
       this.draw()
       if (!this.dead) this.animateFrames()
   
       // attack boxes
+      /* Setting the position of the attack box. */
       this.attackBox.position.x = this.position.x + this.attackBox.offset.x
       this.attackBox.position.y = this.position.y + this.attackBox.offset.y
   
@@ -115,24 +148,36 @@ class Sprite {
       //   this.attackBox.height
       // )
   
+      /* Adding the velocity to the position. */
       this.position.x += this.velocity.x
       this.position.y += this.velocity.y
   
       // gravity function
+      /* Checking if the position of the fighter is greater than the height of the canvas minus 96. If
+      it is, then the velocity of the fighter is set to 0 and the position of the fighter is set to
+      330. If it is not, then the velocity of the fighter is added to the gravity. */
       if (this.position.y + this.height + this.velocity.y >= canvas.height - 96) {
         this.velocity.y = 0
         this.position.y = 330
       } else this.velocity.y += gravity
     }
   
+   /**
+    * The attack function switches the sprite to the attack1 sprite and sets the isAttacking variable
+    * to true.
+    */
     attack() {
       this.switchSprite('attack1')
       this.isAttacking = true
     }
   
+    /* Subtracting 20 from the health of the fighter. */
     takeHit() {
       this.health -= 20
   
+     /* Checking if the health of the fighter is less than or equal to 0. If it is, then it is
+     switching the sprite to the death sprite. If it is not, then it is switching the sprite to the
+     takeHit sprite. */
       if (this.health <= 0) {
         this.switchSprite('death')
       } else this.switchSprite('takeHit')
@@ -159,6 +204,7 @@ class Sprite {
       )
         return
   
+      /* Switching the sprite to the sprite that is passed in. */
       switch (sprite) {
         case 'idle':
           if (this.image !== this.sprites.idle.image) {

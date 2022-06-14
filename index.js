@@ -1,13 +1,18 @@
+/* This is creating a canvas element and a context for the canvas. */
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
+/* Setting the width and height of the canvas. */
 canvas.width = 1024
 canvas.height = 576
 
+/* Creating a black rectangle that is the size of the canvas. */
 c.fillRect(0, 0, canvas.width, canvas.height)
 
+/* Setting the gravity for the game. */
 const gravity = 0.7
 
+/* Creating a new Sprite object. */
 const background = new Sprite({
   position: {
     x: 0,
@@ -16,6 +21,7 @@ const background = new Sprite({
   imageSrc: './img/achtergrond2.png'
 })
 
+/* Creating a new instance of the Fighter class. */
 const player = new Fighter({
   position: {
     x: 0,
@@ -76,6 +82,7 @@ const player = new Fighter({
   }
 })
 
+/* Creating a new instance of the Fighter class. */
 const enemy = new Fighter({
   position: {
     x: 400,
@@ -139,6 +146,8 @@ const enemy = new Fighter({
 
 console.log(player)
 
+/* Creating an object with the keys a, d, ArrowRight, and ArrowLeft. Each of these keys has a property
+called pressed which is set to false. */
 const keys = {
   a: {
     pressed: false
@@ -154,8 +163,11 @@ const keys = {
   }
 }
 
+/* A function that is being called on line #1. */
 decreaseTimer()
 
+/* This is the function that is being called on line #1. It is creating a loop that is being called 60
+times per second. */
 function animate() {
   window.requestAnimationFrame(animate)
   c.fillStyle = 'black'
@@ -169,8 +181,13 @@ function animate() {
   player.velocity.x = 0
   enemy.velocity.x = 0
 
-  // player movement
+  
 
+  /* This is checking if the a key is pressed and if the last key pressed was a. If both of these are
+  true, then the player's velocity is set to -5 and the player's sprite is switched to run. If the d
+  key is pressed and the last key pressed was d, then the player's velocity is set to 5 and the
+  player's sprite is switched to run. If neither of these are true, then the player's sprite is
+  switched to idle. */
   if (keys.a.pressed && player.lastKey === 'a') {
     player.velocity.x = -5
     player.switchSprite('run')
@@ -181,14 +198,22 @@ function animate() {
     player.switchSprite('idle')
   }
 
-  // jumping
+  
+  /* This is checking if the player's velocity is less than 0. If it is, then the player's sprite is
+  switched to jump. If the player's velocity is greater than 0, then the player's sprite is switched
+  to fall. */
   if (player.velocity.y < 0) {
     player.switchSprite('jump')
   } else if (player.velocity.y > 0) {
     player.switchSprite('fall')
   }
 
-  // Enemy movement
+  
+ /* This is checking if the ArrowLeft key is pressed and if the last key pressed was ArrowLeft. If both
+ of these are true, then the enemy's velocity is set to -5 and the enemy's sprite is switched to
+ run. If the ArrowRight key is pressed and the last key pressed was ArrowRight, then the enemy's
+ velocity is set to 5 and the enemy's sprite is switched to run. If neither of these are true, then
+ the enemy's sprite is switched to idle. */
   if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
     enemy.velocity.x = -5
     enemy.switchSprite('run')
@@ -199,14 +224,21 @@ function animate() {
     enemy.switchSprite('idle')
   }
 
-  // jumping
+  
+  /* This is checking if the enemy's velocity is less than 0. If it is, then the enemy's sprite is
+  switched to jump. If the enemy's velocity is greater than 0, then the enemy's sprite is switched
+  to
+  fall. */
   if (enemy.velocity.y < 0) {
     enemy.switchSprite('jump')
   } else if (enemy.velocity.y > 0) {
     enemy.switchSprite('fall')
   }
 
-  // detect for collision & enemy gets hit
+
+  /* This is checking if the player is attacking and if the player's current frame is 4. If both of
+  these are true, then the enemy's takeHit function is called and the enemy's health is set to the
+  enemy's health minus 10. */
   if (
     rectangularCollision({
       rectangle1: player,
@@ -223,12 +255,16 @@ function animate() {
     })
   }
 
-  // if player misses
+  
+  /* This is checking if the player is attacking and if the player's current frame is 4. If both of
+  these are true, then the player's isAttacking property is set to false. */
   if (player.isAttacking && player.framesCurrent === 4) {
     player.isAttacking = false
   }
 
-  // this is where our player gets hit
+  
+  /* This is checking if the player is attacking and if the player's current frame is 4. If both of
+  these are true, then the player's isAttacking property is set to false. */
   if (
     rectangularCollision({
       rectangle1: enemy,
@@ -245,19 +281,31 @@ function animate() {
     })
   }
 
-  // if player misses
+  
+ /* This is checking if the player is attacking and if the player's current frame is 4. If both of
+ these are true, then the player's isAttacking property is set to false. */
   if (enemy.isAttacking && enemy.framesCurrent === 2) {
     enemy.isAttacking = false
   }
 
-  // end game based on health
+  
+ /* This is checking if the enemy's health is less than or equal to 0 or if the player's health is less
+ than or equal to 0. If either of these are true, then the determineWinner function is called. */
   if (enemy.health <= 0 || player.health <= 0) {
     determineWinner({ player, enemy, timerId })
   }
 }
 
+/* Creating a loop that is being called 60 times per second. */
 animate()
 
+/* This is checking if the player is dead. If the player is not dead, then it is checking if the d
+key is pressed. If the d key is pressed, then the d key's pressed property is set to true and the
+player's lastKey property is set to d. If the a key is pressed, then the a key's pressed property is
+
+set to true and the player's lastKey property is set to a. If the w key is pressed, then the
+player's
+velocity is set to -20. If the spacebar is pressed, then the player's attack function is called. */
 window.addEventListener('keydown', (event) => {
   if (!player.dead) {
     switch (event.key) {
@@ -278,6 +326,12 @@ window.addEventListener('keydown', (event) => {
     }
   }
 
+  /* Checking if the enemy is dead. If the enemy is not dead, then it is checking if the ArrowRight key
+  is pressed. If the ArrowRight key is pressed, then the ArrowRight key's pressed property is set to
+  true and the enemy's lastKey property is set to ArrowRight. If the ArrowLeft key is pressed, then
+  the ArrowLeft key's pressed property is set to true and the enemy's lastKey property is set to
+  ArrowLeft. If the ArrowUp key is pressed, then the enemy's velocity is set to -20. If the
+  ArrowDown key is pressed, then the enemy's attack function is called. */
   if (!enemy.dead) {
     switch (event.key) {
       case 'ArrowRight':
@@ -299,6 +353,8 @@ window.addEventListener('keydown', (event) => {
   }
 })
 
+/* This is checking if the d key is pressed. If the d key is pressed, then the d key's pressed property
+is set to false. If the a key is pressed, then the a key's pressed property is set to false. */
 window.addEventListener('keyup', (event) => {
   switch (event.key) {
     case 'd':
@@ -309,7 +365,9 @@ window.addEventListener('keyup', (event) => {
       break
   }
 
-  // enemy keys
+  /* Checking if the ArrowRight key is pressed. If the ArrowRight key is pressed, then the ArrowRight
+  key's pressed property is set to false. If the ArrowLeft key is pressed, then the ArrowLeft key's
+  pressed property is set to false. */
   switch (event.key) {
     case 'ArrowRight':
       keys.ArrowRight.pressed = false
