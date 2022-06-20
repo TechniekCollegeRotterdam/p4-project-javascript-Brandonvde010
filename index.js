@@ -144,7 +144,6 @@ const enemy = new Fighter({
   }
 })
 
-console.log(player)
 
 /* Creating an object with the keys a, d, ArrowRight, and ArrowLeft. Each of these keys has a property
 called pressed which is set to false. */

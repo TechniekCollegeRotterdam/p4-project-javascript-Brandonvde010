@@ -180,7 +180,7 @@ class Sprite {
      takeHit sprite. */
       if (this.health <= 0) {
         this.switchSprite('death')
-      } else this.switchSprite('takeHit')
+      } else this.switchSprite('takeHit')  
     }
   
     switchSprite(sprite) {
@@ -204,7 +204,6 @@ class Sprite {
       )
         return
   
-      /* Switching the sprite to the sprite that is passed in. */
       switch (sprite) {
         case 'idle':
           if (this.image !== this.sprites.idle.image) {
