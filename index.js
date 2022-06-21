@@ -12,6 +12,9 @@ c.fillRect(0, 0, canvas.width, canvas.height)
 /* Setting the gravity for the game. */
 const gravity = 0.7
 
+/* Playing the background music. */
+audio.play();
+
 /* Creating a new Sprite object. */
 const background = new Sprite({
   position: {

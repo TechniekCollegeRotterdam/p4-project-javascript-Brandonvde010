@@ -51,3 +51,14 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
       determineWinner({ player, enemy, timerId })
     }
   }
+
+
+  let audio = document.createElement("AUDIO")
+document.body.appendChild(audio);
+audio.src = "muziek.mp3"
+
+document.body.addEventListener("mousemove", function () {
+    audio.play()
+})
+
+ 
