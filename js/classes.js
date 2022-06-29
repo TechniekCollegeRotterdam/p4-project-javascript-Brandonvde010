@@ -169,6 +169,9 @@ class Sprite {
     attack() {
       this.switchSprite('attack1')
       this.isAttacking = true
+      let slaan = new Audio ('slaan.mp3');
+      slaan.volume=1;
+      slaan.play ()
     }
   
     /* Subtracting 20 from the health of the fighter. */
@@ -244,6 +247,7 @@ class Sprite {
           break
   
         case 'takeHit':
+           hit.play ()
           if (this.image !== this.sprites.takeHit.image) {
             this.image = this.sprites.takeHit.image
             this.framesMax = this.sprites.takeHit.framesMax
@@ -252,12 +256,15 @@ class Sprite {
           break
   
         case 'death':
+          death.play ()
           if (this.image !== this.sprites.death.image) {
             this.image = this.sprites.death.image
             this.framesMax = this.sprites.death.framesMax
             this.framesCurrent = 0
           }
+        
           break
+
       }
     }
   }

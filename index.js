@@ -13,7 +13,7 @@ c.fillRect(0, 0, canvas.width, canvas.height)
 const gravity = 0.7
 
 /* Playing the background music. */
-audio.play();
+// audio.play()
 
 /* Creating a new Sprite object. */
 const background = new Sprite({

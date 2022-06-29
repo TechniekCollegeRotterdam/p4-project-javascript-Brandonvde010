@@ -52,13 +52,19 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
     }
   }
 
-
+/*
   let audio = document.createElement("AUDIO")
 document.body.appendChild(audio);
 audio.src = "muziek.mp3"
+audio.volume=0.8;
 
 document.body.addEventListener("mousemove", function () {
     audio.play()
 })
-
+*/
  
+/* Creating a new audio element. */
+let death = new Audio ('dood.mp3');
+/* Creating a new audio element. */
+let hit = new Audio ('hit.mp3');
+let win = new Audio ('win.mp3');
